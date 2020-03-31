@@ -26,7 +26,6 @@ html {
   }
   input {
     border: none;
-    // background: transparent;
   }
 }
 </style>

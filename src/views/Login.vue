@@ -2,10 +2,10 @@
   <div class="login">
     <h1>This is settings page</h1>
     <TextField :label="label" v-model="value" filled :rules="rules"/>
-    <TextField :label="label" v-model="value"/>
-    <TextField :label="label" v-model="value" rounded outlined filled/>
-    <TextField :label="label" v-model="value" rounded/>
-    <TextField :label="label" v-model="value" outlined filled/>
+    <TextField :label="label" v-model="value" :rules="rules"/>
+    <TextField :label="label" v-model="value" rounded outlined filled :rules="rules"/>
+    <TextField :label="label" v-model="value" rounded :rules="rules"/>
+    <TextField :label="label" v-model="value" outlined filled :rules="rules"/>
   </div>
 </template>
 

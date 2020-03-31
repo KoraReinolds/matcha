@@ -9,6 +9,7 @@
         rounded: roundedMode,
         focus: focus,
         empty: !value,
+        error: errorMsg,
       },
     ]"
   >
@@ -31,7 +32,7 @@
         type="text"
         @focus="focus = true"
         @blur="focus = false"
-        @input="validate"
+        @input="validate($event.target.value)"
         :value="value"
       >
       <label
@@ -42,8 +43,10 @@
       </label>
     </fieldset>
     <div
+      v-if="errorMsg !== true"
       :class="['tooltip-field']"
     >
+      {{ errorMsg }}
     </div>
   </div>
 </template>
@@ -61,6 +64,7 @@ export default {
     legendLen: null,
     id: null,
     curVal: null,
+    errorMsg: null,
   }),
   computed: {
 
@@ -71,8 +75,20 @@ export default {
       this.$refs.input.setSelectionRange(length, length);
       this.$refs.input.focus();
     },
-    validate(event) {
-      this.$emit('input', event.target.value);
+    validate(value) {
+      this.$emit('input', value);
+      if (this.rules) {
+        let msg = null;
+        this.rules.every((rule) => {
+          msg = rule(value);
+          if (msg !== true) {
+            this.errorMsg = msg;
+            return false;
+          }
+          return true;
+        });
+        if (msg === true) this.errorMsg = null;
+      }
     },
     randomValue: (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1)),
     rand(str) { return str[this.randomValue(0, str.length - 1)]; },
@@ -83,6 +99,9 @@ export default {
       }
       return id;
     },
+  },
+  watch: {
+    value(val) { this.validate(val); },
   },
   mounted() {
     this.filledMode = this.filled === '';
@@ -104,47 +123,58 @@ export default {
 </script>
 
 <style lang="scss">
-
+  $error-color: rgb(241, 44, 44);
   .text-field {
     height: 86px;
-      .input-field {
-        cursor: text;
-        transition: all 0.3s;
-        border: solid 1px rgba($color: #000000, $alpha: 0.45);
-        position: relative;
+    .input-field {
+      cursor: text;
+      transition: all 0.3s;
+      border: solid 1px rgba($color: #000000, $alpha: 0.45);
+      position: relative;
+      width: 100%;
+      left: 0;
+      top: 0px;
+      height: 56px;
+      legend {
+        transition: width 0.3s;
+        margin-left: 8px;
+      }
+      input {
+        background: transparent;
+        font-size: 16px;
+        height: 32px;
         width: 100%;
-        left: 0;
-        top: 0px;
-        height: 56px;
-        legend {
-          transition: width 0.3s;
-          margin-left: 8px;
-        }
-        input {
-          // background: lightblue;
-          background: transparent;
-          font-size: 16px;
-          height: 32px;
-          width: 100%;
-          &:focus {
-            outline: none;
-          }
-        }
-        label {
-          position: absolute;
-          left: 12px;
-          top: 16px;
-          transition: all 0.3s;
-          font-size: 16px;
-          color: rgba($color: #000000, $alpha: 0.45);
-        }
-        &:hover {
-          border-color: rgba(0.0, 0.0, 0.0, 0.75);
-          label {
-            color: rgba(0.0, 0.0, 0.0, 0.75);
-          }
+        &:focus {
+          outline: none;
         }
       }
+      label {
+        position: absolute;
+        left: 12px;
+        top: 16px;
+        transition: all 0.3s;
+        font-size: 16px;
+        color: rgba($color: #000000, $alpha: 0.45);
+      }
+      &:hover {
+        border-color: rgba(0.0, 0.0, 0.0, 0.75);
+        label {
+          color: rgba(0.0, 0.0, 0.0, 0.75);
+        }
+      }
+    }
+    &.error {
+      .tooltip-field,
+      label {
+        color: $error-color !important;
+      }
+      .input-field::after {
+        background: $error-color !important;
+      }
+      .input-field {
+        border-color: $error-color !important;
+      }
+    }
     &.focus,
     &:not(.empty) {
       label {
@@ -239,12 +269,20 @@ export default {
           background: rgba($color: #000000, $alpha: 0.1);
         }
       }
+      &.error {
+        .input-field {
+          background: rgba($color: $error-color, $alpha: 0.05);
+        }
+      }
     }
 
-
+  &.rounded .tooltip-field {
+    padding: 0 26px;
+  }
   .tooltip-field {
     font-size: 0.7em;
-    text-align: right;
+    text-align: left;
+    padding: 0 12px;
   }
 
 }
