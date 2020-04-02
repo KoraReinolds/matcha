@@ -1,0 +1,59 @@
+$main-color-dark: #9e6459;
+$main-color-box: #c9ada7;
+$main-color: #ec9383;
+$main-color-shadow: #ad6c60;
+$main-color-light: #faddd8;
+$font-color: #2c3e50;
+
+.btn {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 20px;
+  background: $main-color;
+  color: white;
+  border-radius: 5px;
+  &:hover {
+    background: $main-color-shadow;
+  }
+  &.disabled {
+    cursor: default;
+    background: lightgray;
+  }
+}
+
+.link {
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.title {
+  display: table;
+  &:before, &:after {
+    border-top: 1px solid $font-color;
+    content: '';
+    display: table-cell;
+    position: relative;
+    top: 0.7em;
+    width: 50%;
+  }
+  &:before { right: 1.5%; }
+  &:after { left: 1.5%; }
+  &.left {
+    &:before {
+      width: 10%;
+    }
+    &:after {
+      width: 90%;
+    }
+  }
+  &.right {
+    &:before {
+      width: 90%;
+    }
+    &:after {
+      width: 10%;
+    }
+  }
+}

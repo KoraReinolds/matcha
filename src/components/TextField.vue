@@ -13,6 +13,7 @@
       },
     ]"
   >
+  <!-- {{this.rules}} -->
     <fieldset
       :class="[
         'input-field',
@@ -77,17 +78,21 @@ export default {
     },
     validate(value) {
       this.$emit('input', value);
-      if (this.rules) {
+      if (this.rules && this.rules.rules) {
         let msg = null;
-        this.rules.every((rule) => {
+        this.rules.rules.every((rule) => {
           msg = rule(value);
           if (msg !== true) {
             this.errorMsg = msg;
+            this.rules.valid = false;
             return false;
           }
           return true;
         });
-        if (msg === true) this.errorMsg = null;
+        if (msg === true) {
+          this.errorMsg = null;
+          this.rules.valid = true;
+        }
       }
     },
     randomValue: (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1)),
