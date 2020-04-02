@@ -61,7 +61,6 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to.path, from.path);
   if (localStorage.getItem('user')) {
     if (to.path === '/login/' && from.path !== '/') next(from.path);
     else if (to.path === '/login/' && from.path === '/') next('/search');

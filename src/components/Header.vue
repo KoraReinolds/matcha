@@ -117,7 +117,7 @@ header {
   background-color: $main-color;
   z-index: 4;
   transition: height 0.5s;
-  box-shadow: inset 0 -5px 10px $main-color-shadow;
+  box-shadow: inset 0 -5px 20px $main-color-shadow;
   .nav {
     display: flex;
     align-items: center;

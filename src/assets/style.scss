@@ -1,19 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
-$main-color-light-6: #fef9ff;
-$main-color-light-5: #f3e5f5;
-$main-color-light-4: #e1bee7;
-$main-color-light-3: #ce93d8;
-$main-color-light-2: #ba68c8;
-$main-color-light-1: #ab47bc;
-$main-color-dark-1: #8e24aa;
-$main-color-dark-2: #7b1fa2;
-$main-color-dark-3: #6a1b9a;
-$main-color-dark-4: #4a148c;
+$purple-light-5: #f3e5f5;
+$purple-light-4: #e1bee7;
+$purple-light-3: #ce93d8;
+$purple-light-2: #ba68c8;
+$purple-light-1: #ab47bc;
+$purple-dark-1: #8e24aa;
+$purple-dark-2: #7b1fa2;
+$purple-dark-3: #6a1b9a;
+$purple-dark-4: #4a148c;
 
-$main-color: $main-color-light-3;
-$main-color-hover: $main-color-light-1;
-$main-color-shadow: $main-color-light-2;
+$blue-light-5: #E3F2FD;
+$blue-light-4: #BBDEFB;
+$blue-light-3: #90CAF9;
+$blue-light-2: #64B5F6;
+$blue-light-1: #42A5F5;
+$blue-dark-1: #1E88E5;
+$blue-dark-2: #1976D2;
+$blue-dark-3: #1565C0;
+$blue-dark-4: #0D47A1;
+
+$green-light-5: #E8F5E9;
+$green-light-4: #C8E6C9;
+$green-light-3: #A5D6A7;
+$green-light-2: #81C784;
+$green-light-1: #66BB6A;
+$green-dark-1: #43A047;
+$green-dark-2: #388E3C;
+$green-dark-3: #2E7D32;
+$green-dark-4: #1B5E20;
+
+$red-light-5: #FFEBEE;
+$red-light-4: #FFCDD2;
+$red-light-3: #EF9A9A;
+$red-light-2: #E57373;
+$red-light-1: #EF5350;
+$red-dark-1: #E53935;
+$red-dark-2: #D32F2F;
+$red-dark-3: #C62828;
+$red-dark-4: #B71C1C;
+
+$main-color: $green-light-1;
+$main-color-hover: $green-dark-2;
+$main-color-shadow: $green-dark-2;
 
 $font-color: #2c3e50;
 
