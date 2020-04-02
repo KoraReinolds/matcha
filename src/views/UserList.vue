@@ -1,12 +1,12 @@
 <template>
-  <div class="settings">
-    <h1>This is settings page</h1>
+  <div id="user-list">
+    <h1>user-list page</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'settings',
+  name: 'user-list',
   components: {
   },
   data: () => ({

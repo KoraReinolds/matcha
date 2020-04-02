@@ -13,7 +13,6 @@
       },
     ]"
   >
-  <!-- {{this.rules}} -->
     <fieldset
       :class="[
         'input-field',

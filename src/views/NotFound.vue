@@ -1,12 +1,12 @@
 <template>
-  <div class="settings">
-    <h1>This is settings page</h1>
+  <div id="not_found">
+    <h1>not_found page</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'settings',
+  name: 'not_found',
   components: {
   },
   data: () => ({
