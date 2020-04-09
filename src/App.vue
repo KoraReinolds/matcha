@@ -24,7 +24,7 @@ export default {
       resize: 'RESIZE',
     }),
     ...mapActions({
-      getUsers: 'auth/SIGN_IN',
+      getUsers: 'user/GET_USERS',
     }),
   },
   beforeDestroy() {
@@ -78,9 +78,7 @@ html,
 }
 #app {
   @media (max-width: $mobile-breakpoint) {
-    .only_laptop {
-      padding-top: 30px;
-    }
+    padding-top: 30px;
   }
   padding-top: 80px;
 }

@@ -27,6 +27,16 @@ const randArr = (min, max, arr) => {
   return na;
 };
 
+// returns strung with values from 'arr'
+const randText = (min, max, arr) => {
+  let na = '';
+  const n = r(min, max);
+  for (let i = 0; i < n; i += 1) {
+    na += (` ${rand(arr)}`);
+  }
+  return na;
+};
+
 // returns new array with length from 'min' to 'max' and unique values from 'minNum' to 'maxNum'
 const randArrNum = (min, max, minNum, maxNum) => {
   const na = [];
@@ -36,16 +46,6 @@ const randArrNum = (min, max, minNum, maxNum) => {
     if (!na.includes(val)) {
       na.push(val);
     }
-  }
-  return na;
-};
-
-// returns strung with values from 'arr'
-const randText = (min, max, arr) => {
-  let na = '';
-  const n = r(min, max);
-  for (let i = 0; i < n; i += 1) {
-    na += (` ${rand(arr)}`);
   }
   return na;
 };
@@ -66,6 +66,7 @@ const chatList = {};
 
 
 export default {
+
 
   async getUsers(n) {
     const myLocation = await GPS.byGPS()
@@ -149,22 +150,29 @@ export default {
       userList.push(genereateUser(i));
     }
     return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          token: 'user',
-          user,
-          userList,
-          tagList,
-          likeList,
-          visitorLikeList,
-          historyList,
-          visitorList,
-          chatList,
-        });
-      }, 1);
+      // setTimeout(() => {
+      resolve({
+        token: 'user',
+        user,
+        userList,
+        tagList,
+        likeList,
+        visitorLikeList,
+        historyList,
+        visitorList,
+        chatList,
+      });
+      // }, 1000);
     });
   },
 
-  login() { return this.getUsers(1000); },
+  login() { return this.getUsers(10); },
+  saveChanges() {
+    return new Promise((resolve) => {
+      resolve({
+        status: 'ok',
+      });
+    });
+  },
 
 };

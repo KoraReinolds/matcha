@@ -9,7 +9,7 @@
         rounded: roundedMode,
         focus: focus,
         empty: !value,
-        error: errorMsg,
+        error: errorMsg || error,
       },
     ]"
   >
@@ -19,42 +19,52 @@
       ]"
       align="left"
       aria-hidden="true"
-      @click.prevent="focusInput"
+      @click.prevent="$refs.input ? $refs.input.focus() : $refs.textarea.focus()"
     >
       <legend
         :style="{
           width: (focus || value) ? `${legendLen + 8}px`: '0px',
         }"
       ></legend>
-      <input
-        :id="id"
-        ref="input"
+      <textarea
+        v-if="textarea"
+        ref="textarea"
         type="text"
         @focus="focus = true"
-        @blur="focus = false"
-        @input="validate($event.target.value)"
+        @blur="focus = false; $emit('blur', $event)"
+        @input="$emit('input', $event.target.value);"
         :value="value"
-      >
+      />
+      <input
+        v-else
+        ref="input"
+        type="text"
+        @keyup="$emit('keyup', $event)"
+        @focus="focus = true; $emit('focus', $event)"
+        @blur="focus = false; $emit('blur', $event)"
+        @input="$emit('input', $event.target.value)"
+        :value="value"
+      />
       <label
-        :for="id"
         ref="label"
       >
         {{ label }}
       </label>
     </fieldset>
     <div
-      v-if="errorMsg !== true"
       :class="['tooltip-field']"
     >
-      {{ errorMsg }}
+      {{ errorMsg || error }}
     </div>
   </div>
 </template>
 
 <script>
+import validateMixin from '@/mixins/validateMixin';
+
 export default {
   name: 'TextField',
-  props: ['label', 'value', 'color', 'outlined', 'filled', 'rounded', 'rules'],
+  props: ['label', 'value', 'color', 'outlined', 'filled', 'rounded', 'rules', 'many', 'error'],
   data: () => ({
     focus: false,
     regularMode: null,
@@ -62,52 +72,33 @@ export default {
     roundedMode: null,
     filledMode: null,
     legendLen: null,
-    id: null,
-    curVal: null,
     errorMsg: null,
+    textarea: null,
   }),
+  mixins: [validateMixin],
   computed: {
-
   },
   methods: {
-    focusInput() {
-      const { length } = this.$refs.input.value;
-      this.$refs.input.setSelectionRange(length, length);
-      this.$refs.input.focus();
-    },
-    validate(value) {
-      this.$emit('input', value);
-      if (this.rules && this.rules.rules) {
-        let msg = null;
-        this.rules.rules.every((rule) => {
-          msg = rule(value);
-          if (msg !== true) {
-            this.errorMsg = msg;
-            this.rules.valid = false;
-            return false;
-          }
-          return true;
-        });
-        if (msg === true) {
-          this.errorMsg = null;
-          this.rules.valid = true;
-        }
+    setHeight(elem) {
+      const el = elem;
+      if (el) {
+        el.style.cssText = 'height:0px';
+        el.style.cssText = `height:${
+          el.scrollHeight + 12
+        }px`;
       }
-    },
-    randomValue: (min, max) => Math.round(min - 0.5 + Math.random() * (max - min + 1)),
-    rand(str) { return str[this.randomValue(0, str.length - 1)]; },
-    randId() {
-      let id = '';
-      for (let i = 0; i < 5; i += 1) {
-        id += this.rand('1234567890qwertyuiopasdfghjklzxcvbnm');
-      }
-      return id;
     },
   },
   watch: {
-    value(val) { this.validate(val); },
+    value() {
+      this.validate(this.value);
+      this.$nextTick(() => {
+        this.setHeight(this.$refs.textarea);
+      });
+    },
   },
   mounted() {
+    this.textarea = this.many === '';
     this.filledMode = this.filled === '';
     this.outlinedMode = this.outlined === '';
     this.roundedMode = this.rounded === '';
@@ -118,19 +109,22 @@ export default {
       this.outlinedMode = true;
       this.regularMode = null;
     }
-    this.id = this.randId();
-    this.curVal = this.value;
     if (this.value) this.legendLen = this.$refs.label.offsetWidth;
     else this.legendLen = this.$refs.label.offsetWidth * 0.75;
+    this.$nextTick(() => {
+      this.setHeight(this.$refs.textarea);
+    });
   },
 };
 </script>
 
 <style lang="scss">
-  $error-color: rgb(241, 44, 44);
+@import '@/assets/style.scss';
+
   .text-field {
-    height: 86px;
+    min-height: 86px;
     .input-field {
+      height: auto;
       cursor: text;
       transition: all 0.3s;
       border: solid 1px rgba($color: #000000, $alpha: 0.45);
@@ -138,12 +132,15 @@ export default {
       width: 100%;
       left: 0;
       top: 0px;
-      height: 56px;
+      min-height: 56px;
       legend {
         transition: width 0.3s;
         margin-left: 8px;
       }
+      textarea,
       input {
+        resize: none;
+        border: none;
         background: transparent;
         font-size: 16px;
         height: 32px;
@@ -190,6 +187,11 @@ export default {
       .input-field {
         border: transparent;
         border-bottom: solid 1px rgba($color: #000000, $alpha: 0.45);
+        textarea {
+          position: relative;
+          top: 20px;
+          padding: 8px 12px;
+        }
         input {
           padding: 8px 12px;
           position: absolute;
@@ -230,6 +232,7 @@ export default {
     &.outlined {
       .input-field {
         border-radius: 8px;
+        textarea,
         input {
           position: relative;
           top: 11px;
@@ -254,6 +257,9 @@ export default {
         border-radius: 28px;
         legend {
           margin-left: 22px;
+        }
+        textarea {
+          padding: 8px 26px;
         }
         input {
           position: absolute;
@@ -282,11 +288,6 @@ export default {
 
   &.rounded .tooltip-field {
     padding: 0 26px;
-  }
-  .tooltip-field {
-    font-size: 0.7em;
-    text-align: left;
-    padding: 0 12px;
   }
 
 }

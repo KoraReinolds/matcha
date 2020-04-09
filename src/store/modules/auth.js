@@ -19,9 +19,11 @@ export default {
       API.login().then((data) => {
         localStorage.setItem('user', data.token);
         commit('user/SET_USER', data.user, { root: true });
-
-        if (data.user.informationFilled) router.push({ path: `/user/${data.user.id}` });
-        else router.push({ name: 'settings' });
+        if (data.user.informationFilled) {
+          router.push({ path: `/user/${data.user.id}` });
+        } else {
+          router.push({ name: 'settings' });
+        }
       });
     },
   },

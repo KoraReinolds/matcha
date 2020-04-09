@@ -61,12 +61,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  // console.log(to.path, from.path, router.currentRoute.path);
+  // try {
   if (localStorage.getItem('user')) {
     if (to.path === '/login/' && from.path !== '/') next(from.path);
     else if (to.path === '/login/' && from.path === '/') next('/search');
     else next();
   } else if (to.path !== '/login/') next('/login/');
   else next();
+  // } catch (err) { err == null; }
 });
 
 export default router;

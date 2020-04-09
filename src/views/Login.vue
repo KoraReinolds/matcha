@@ -173,13 +173,13 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import '@/assets/style.scss';
 
 .form {
   width: 95%;
   max-width: 500px;
-  margin: 100px auto;
+  margin: 5% auto;
   background: #fff;
   padding: 40px 20px;
   border-radius: 10px;
