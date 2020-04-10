@@ -58,6 +58,9 @@ html,
   p {
     margin: 0;
   }
+  div {
+    text-align: left;
+  }
   min-height: 100vh;
   margin: 0;
   font-family: Avenir, Helvetica, Arial, sans-serif;

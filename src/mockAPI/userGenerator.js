@@ -134,7 +134,7 @@ export default {
             src: `https://i.picsum.photos/id/${i + 1}/200/300.jpg`,
           },
         ],
-        fameRating: r(0, n),
+        fameRating: r(0, 1000),
         mailConfirmed: true,
         informationFilled: true,
       };
@@ -168,6 +168,27 @@ export default {
 
   login() { return this.getUsers(10); },
   saveChanges() {
+    return new Promise((resolve) => {
+      resolve({
+        status: 'ok',
+      });
+    });
+  },
+  like() {
+    return new Promise((resolve) => {
+      resolve({
+        status: 'ok',
+      });
+    });
+  },
+  ban() {
+    return new Promise((resolve) => {
+      resolve({
+        status: 'ok',
+      });
+    });
+  },
+  block() {
     return new Promise((resolve) => {
       resolve({
         status: 'ok',

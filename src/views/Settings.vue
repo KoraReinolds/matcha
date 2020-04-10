@@ -272,9 +272,6 @@ export default {
     .textarea,
     .form-actions {
       width: 100%;
-      justify-content: flex-start;
-      .btn {
-      }
     }
     @media (max-width: $mobile-breakpoint) {
       .btn {

@@ -53,11 +53,11 @@
             icon="times-circle"
             @click="deleteImg(index)"
           />
-          <img
-            class="img"
+          <CustomImage
             :src="img.src"
+            :key="'user_image'+index"
             @click="setAsMainImg(index)"
-          >
+          />
           <font-awesome-icon
             class="icon main_mark fa-2x"
             icon="check"
@@ -76,10 +76,12 @@
 
 <script>
 import validateMixin from '@/mixins/validateMixin';
+import CustomImage from '@/components/CustomImage.vue';
 
 export default {
   name: 'imagesFielld',
   components: {
+    CustomImage,
   },
   data: () => ({
     newImageId: -1,

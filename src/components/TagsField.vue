@@ -30,6 +30,7 @@
         :key="label+tag"
         :name="tag"
         @click="deleteTag(index)"
+        canDelete
       >
       </Tag>
     </div>
