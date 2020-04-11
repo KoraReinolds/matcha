@@ -6,7 +6,7 @@
       `fa-${size}x`,
     ]"
     icon="user-slash"
-    @click="block(user.id)"
+    @click="block(user)"
   />
 </template>
 
@@ -39,9 +39,8 @@ export default {
 .block {
   transition: all 0.2s;
   cursor: pointer;
-  &:hover,
   &.active {
-    color: $font-color;
+    color: $block-color;
   }
 }
 </style>

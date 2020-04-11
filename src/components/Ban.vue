@@ -6,7 +6,7 @@
       `fa-${size}x`,
     ]"
     icon="ban"
-    @click="ban(user.id)"
+    @click="ban(user)"
   />
 </template>
 
@@ -39,9 +39,8 @@ export default {
 .ban {
   transition: all 0.2s;
   cursor: pointer;
-  &:hover,
   &.active {
-    color: $font-color;
+    color: $ban-color;
   }
 }
 </style>

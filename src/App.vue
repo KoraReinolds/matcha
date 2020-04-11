@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <Header>123</Header>
+    <PopWindow/>
+    <Header/>
     <router-view/>
   </div>
 </template>
@@ -8,11 +9,13 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Header from '@/components/Header.vue';
+import PopWindow from '@/components/PopWindow.vue';
 
 export default {
   name: 'app',
   components: {
     Header,
+    PopWindow,
   },
   computed: {
     ...mapGetters({

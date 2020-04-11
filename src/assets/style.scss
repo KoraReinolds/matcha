@@ -47,7 +47,15 @@ $main-color-shadow: $green-dark-2;
 
 $font-color: #2c3e50;
 $error-color: $red-dark-1;
-$like-color: $red-dark-3;
+$like-color: $red-dark-1;
+$ban-color: $red-dark-4;
+$block-color: $font-color;
+.ban_color { color: $ban-color; }
+.ban_bg { background: rgba($color: $ban-color, $alpha: 0.1); }
+.ban_border { border: 1px solid $ban-color; }
+.block_color { color: $block-color; }
+.block_bg { background: rgba($color: $block-color, $alpha: 0.1); }
+.block_border { border: 1px solid $block-color; }
 
 $wrapper-width: 1000px;
 $mobile-breakpoint: 480px;

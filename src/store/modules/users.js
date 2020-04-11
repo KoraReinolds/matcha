@@ -83,12 +83,12 @@ export default {
     //     }
     //   });
     // },
-    LIKE: (state, id) => {
-      lib.unshiftOrDelete(state.myLikeList, id);
+    LIKE: (state, user) => {
+      lib.unshiftOrDelete(state.myLikeList, user.id);
       state.myLikeList = [...state.myLikeList];
 
-      if (state.visitorLikeList.includes(id)) {
-        state.chatList[id] = {
+      if (state.visitorLikeList.includes(user.id)) {
+        state.chatList[user.id] = {
           messages: {},
         };
         state.chatList = { ...state.chatList };
@@ -117,17 +117,25 @@ export default {
     },
   },
   actions: {
-    BAN: ({ commit }, id) => {
-      API.ban(id).then(() => {
+    BAN: ({ commit }, user) => {
+      API.ban(user.id).then(() => {
+        commit('msg/SET_MESSAGE', {
+          status: 'ban',
+          text: `${user.firstName} has been banned`,
+        }, { root: true });
       });
     },
-    BLOCK: ({ commit }, id) => {
-      API.block(id).then(() => {
+    BLOCK: ({ commit }, user) => {
+      API.block(user.id).then(() => {
+        commit('msg/SET_MESSAGE', {
+          status: 'block',
+          text: `${user.firstName} has been blocked`,
+        }, { root: true });
       });
     },
-    LIKE: ({ commit }, id) => {
-      API.like(id).then(() => {
-        commit('LIKE', id);
+    LIKE: ({ commit }, user) => {
+      API.like(user.id).then(() => {
+        commit('LIKE', user);
       });
     },
   //   SEND_MESSAGE: ({ commit }, value) => {

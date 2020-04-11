@@ -9,7 +9,7 @@
       }
     ]"
     icon="heart"
-    @click="like(user.id)"
+    @click="like(user)"
   />
 </template>
 
@@ -43,9 +43,8 @@ export default {
 .like {
   transition: all 0.2s;
   cursor: pointer;
-  &:hover,
   &.active {
-    color: $like-color;
+    color: rgba($color: $like-color, $alpha: 1.0);
   }
 }
 </style>
