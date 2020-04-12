@@ -4,6 +4,7 @@
     :style="{
       width: width ? width : '100%',
       height: height ? height : '100%',
+      borderRadius: rounded === '' ? '50%' : '',
     }"
     :src="src"
   />
@@ -14,7 +15,7 @@
 
 export default {
   name: 'CustomImage',
-  props: ['src', 'width', 'height'],
+  props: ['src', 'width', 'height', 'rounded'],
   data: () => ({
     status: 'pending',
   }),
@@ -22,6 +23,8 @@ export default {
     pictures() {
       this.status = 'pending';
     },
+  },
+  mounted() {
   },
 };
 </script>

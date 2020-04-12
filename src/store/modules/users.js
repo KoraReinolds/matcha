@@ -22,8 +22,8 @@ export default {
     // CHAT_LIST: (state) => state.chatList,
     VISITOR_LIKES: (state) => state.visitorLikeList,
     MY_LIKES: (state) => state.myLikeList,
-    // VISITORS: (state) => state.visitorList,
-    // HISTORY: (state) => state.historyList,
+    VISITORS: (state) => state.visitorList,
+    HISTORY: (state) => state.historyList,
     // USERS: (state) => state.users,
   },
   mutations: {

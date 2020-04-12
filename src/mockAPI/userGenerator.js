@@ -166,34 +166,69 @@ export default {
     });
   },
 
+  getNotifications: () => new Promise((resolve) => {
+    setTimeout(() => {
+      const result = [];
+      const like = [];
+      const dislike = [];
+      const visit = [];
+      const messages = [];
+      const actions = ['like', '', 'visit', 'message', '', '', '', '', '', ''];
+
+
+      for (let i = 0; i < r(0, 10); i += 1) {
+        const action = actions[r(0, actions.length - 1)];
+        if (action === 'visit') {
+          visit.push(r(0, userList.length - 1));
+        } else if (action === 'dislike') {
+          const index = r(0, visitorLikeList.length);
+          const idArr = visitorLikeList.splice(index, 1);
+          if (idArr[0]) dislike.push(idArr[0]);
+          if (chatList[idArr[0]]) delete chatList[idArr[0]];
+        } else if (action === 'like') {
+          const id = r(1, 1000);
+          if (!visitorLikeList.includes(id) && !dislike.includes(id)) {
+            visitorLikeList.push(id);
+            like.push(id);
+          }
+        } else if (action === 'message') {
+          const chatUsers = Object.keys(chatList);
+          if (chatUsers.length) {
+            const id = chatUsers[r(0, chatUsers.length - 1)];
+            messages.push({
+              id,
+              text: randText(10, 100, newwords),
+            });
+          }
+        }
+      }
+      if (dislike.length) result.push({ status: 'dislike', who: dislike });
+      if (like.length) result.push({ status: 'like', who: like });
+      if (visit.length) result.push({ status: 'visit', who: visit });
+      if (messages.length) result.push({ status: 'message', who: messages });
+      resolve(result);
+    }, 1000);
+  }),
   login() { return this.getUsers(10); },
-  saveChanges() {
-    return new Promise((resolve) => {
-      resolve({
-        status: 'ok',
-      });
+  saveChanges: () => new Promise((resolve) => {
+    resolve({
+      status: 'ok',
     });
-  },
-  like() {
-    return new Promise((resolve) => {
-      resolve({
-        status: 'ok',
-      });
+  }),
+  like: () => new Promise((resolve) => {
+    resolve({
+      status: 'ok',
     });
-  },
-  ban() {
-    return new Promise((resolve) => {
-      resolve({
-        status: 'ok',
-      });
+  }),
+  ban: () => new Promise((resolve) => {
+    resolve({
+      status: 'ok',
     });
-  },
-  block() {
-    return new Promise((resolve) => {
-      resolve({
-        status: 'ok',
-      });
+  }),
+  block: () => new Promise((resolve) => {
+    resolve({
+      status: 'ok',
     });
-  },
+  }),
 
 };

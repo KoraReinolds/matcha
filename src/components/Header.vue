@@ -45,12 +45,14 @@
       >
       <font-awesome-layers
         class="icon"
+        v-if="notifications.length"
       >
         <font-awesome-icon icon="bell"/>
         <span
+          v-if="curLen(notifications, 'notifications')"
           class="fa-layers-counter counter fa-2x"
         >
-          0
+          {{ curLen(notifications, 'notifications') }}
         </span>
       </font-awesome-layers>
       </router-link>
@@ -81,14 +83,25 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'app',
+  data: () => ({
+    startLen: 0,
+  }),
   components: {
   },
   computed: {
     ...mapGetters({
       user: 'user/USER',
+      notifications: 'msg/GET_ALL_NOTIFICATIONS',
     }),
   },
   methods: {
+    curLen(list, path) {
+      const len = list.length || list.keys().length;
+      if (this.$route.path === `/${path}`) {
+        this.startLen = len;
+      }
+      return len - this.startLen;
+    },
     ...mapMutations({
     }),
     ...mapActions({

@@ -5,7 +5,7 @@
   >
 
     <div
-      class="images"
+      class="main-images"
     >
       <CustomImage
         :width="mobile ? '100%' : '200px'"
@@ -15,49 +15,29 @@
       />
       <div
         class="icons"
-        v-if="user.id === me.id"
+        v-if="user.id !== me.id"
       >
         <Like
           :size="2"
+          :active="myLikeList.includes(user.id)"
+          :user="user"
         />
         <Ban
           :size="2"
+          :user="user"
         />
         <Block
           :size="2"
+          :user="user"
         />
-        <!-- <font-awesome-icon
-          :class="[
-            'icon',
-            'ban',
-            'fa-2x',
-          ]"
-          icon="ban"
-          @click="ban(user.id)"
-        />
-        <font-awesome-icon
-          :class="[
-            'icon',
-            'block',
-            'fa-2x',
-          ]"
-          icon="user-slash"
-          @click="block(user.id)"
-        /> -->
       </div>
-      <router-link
-        v-if="user.id != me.id &&
-        myLikeList.includes(user.id) &&
-        visitorLikeList.includes(user.id)"
-        :to="{ path: `/chat` }"
-      >
-        <div
-          class="to_chat"
-          @click="chatWIthUser(user.id)"
-        >
-          Join to chat
-        </div>
-      </router-link>
+      <ChatLink
+          v-if="user.id != me.id &&
+          myLikeList.includes(user.id) &&
+          visitorLikeList.includes(user.id)"
+          class="chat-link"
+          :user="user"
+      />
     </div>
     <div
       class="info"
@@ -69,11 +49,9 @@
         <span
           class="fio"
         >
-          <span
-            class="name"
-          >
-            {{`${user.firstName} ${user.lastName}, ${user.age}`}}
-          </span>
+          <NameLink
+            :user="user"
+          />
           <Raiting
             class="rate"
             :value="user.fameRating"
@@ -183,6 +161,8 @@
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import CustomImage from '@/components/CustomImage.vue';
+import NameLink from '@/components/NameLink.vue';
+import ChatLink from '@/components/ChatLink.vue';
 import Tag from '@/components/Tag.vue';
 import Ban from '@/components/Ban.vue';
 import Block from '@/components/Block.vue';
@@ -195,6 +175,8 @@ export default {
   name: 'user-page',
   components: {
     CustomImage,
+    NameLink,
+    ChatLink,
     Tag,
     Ban,
     Block,
@@ -217,7 +199,6 @@ export default {
   },
   methods: {
     ...mapMutations({
-      like: 'users/LIKE',
       chatWIthUser: 'users/SET_CUR_CHAT_USER_ID',
       setCurUserId: 'users/SET_CUR_USER_ID',
     }),
@@ -244,29 +225,19 @@ export default {
   flex-wrap: wrap;
   padding: 50px 10px;
   @media (max-width: $mobile-breakpoint) { padding: 0 0 50px 0; }
-  .images {
+  .main-images {
     position: relative;
-    @media (max-width: $mobile-breakpoint) { margin-bottom: 40px; };
+    @media (max-width: $mobile-breakpoint) { margin-bottom: 90px; };
     @media (max-width: $mobile-breakpoint) { width: 100%; }
     .icons {
       color: lightgray;
       display: flex;
       position: relative;
       justify-content: space-around;
-      .user-slash .inner_icon {
-        position: absolute;
-        left: -5px;
-        transform: scale(0.8);
-      }
     }
-    .to_chat {
+    .chat-link {
       position: relative;
-      background-color: $main-color;
-      bottom: 60px;
-      padding: 10px;
-      text-align: center;
-      color: #fff;
-      font-family: 'Lobster', cursive;
+      top: 10px;
     }
   }
   .info {

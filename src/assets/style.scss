@@ -45,11 +45,17 @@ $main-color: $green-light-1;
 $main-color-hover: $green-dark-2;
 $main-color-shadow: $green-dark-2;
 
+$male-color: $blue-light-2;
+$female-color: $red-light-3;
+$bisexual-color: $green-light-2;
 $font-color: #2c3e50;
 $error-color: $red-dark-1;
 $like-color: $red-dark-1;
 $ban-color: $red-dark-4;
 $block-color: $font-color;
+.male_color { color: $male-color; }
+.female_color { color: $female-color; }
+.bisexual_color { color: $bisexual-color; }
 .ban_color { color: $ban-color; }
 .ban_bg { background: rgba($color: $ban-color, $alpha: 0.1); }
 .ban_border { border: 1px solid $ban-color; }

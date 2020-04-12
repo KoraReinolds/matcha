@@ -17,10 +17,9 @@ export default {
   name: 'Block',
   data: () => ({
   }),
-  props: ['size'],
+  props: ['size', 'user'],
   computed: {
     ...mapGetters({
-      user: 'users/CURRENT_USER',
     }),
   },
   methods: {

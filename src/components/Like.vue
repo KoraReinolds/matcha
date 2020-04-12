@@ -5,7 +5,7 @@
       'like',
       `fa-${size}x`,
       {
-        active: myLikeList.includes(user.id)
+        active,
       }
     ]"
     icon="heart"
@@ -20,10 +20,9 @@ export default {
   name: 'Like',
   data: () => ({
   }),
-  props: ['size'],
+  props: ['size', 'user', 'active'],
   computed: {
     ...mapGetters({
-      user: 'users/CURRENT_USER',
       myLikeList: 'users/MY_LIKES',
     }),
   },
@@ -42,6 +41,7 @@ export default {
 
 .like {
   transition: all 0.2s;
+  color: lightgray;
   cursor: pointer;
   &.active {
     color: rgba($color: $like-color, $alpha: 1.0);
