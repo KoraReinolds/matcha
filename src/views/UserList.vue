@@ -78,8 +78,7 @@ export default {
   padding: 50px 0;
   .user_list {
     position: relative;
-    max-width: 850px;
-    min-width: 850px;
+    width: 850px;
     height: 1000px;
     overflow: hidden;
   }

@@ -36,7 +36,10 @@ export default {
         : null),
   },
   mutations: {
-    CHANGE_COUNT_PER_PAGE: (state) => { state.countPerPage = window.innerWidth <= 480 ? 1 : 3; },
+    CHANGE_COUNT_PER_PAGE: (state) => {
+      state.countPerPage = window.innerWidth <= 480 ? 1 : 3;
+      state.firstIndex = 0;
+    },
     SORT: (state, value) => {
       if (value) {
         const prefixes = {};

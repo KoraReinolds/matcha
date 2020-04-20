@@ -28,6 +28,7 @@ export default {
   methods: {
     ...mapMutations({
       resize: 'RESIZE',
+      rechangeCount: 'tools/CHANGE_COUNT_PER_PAGE',
     }),
     ...mapActions({
       getUsers: 'user/GET_USERS',
@@ -35,11 +36,13 @@ export default {
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.resize);
+    window.removeEventListener('resize', this.rechangeCount);
   },
   mounted() {
     if (!this.user && localStorage.getItem('user')) this.getUsers();
     this.$nextTick(() => { this.resize(); });
     window.addEventListener('resize', this.resize);
+    window.addEventListener('resize', this.rechangeCount);
   },
 };
 </script>
