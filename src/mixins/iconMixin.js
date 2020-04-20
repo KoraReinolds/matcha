@@ -6,7 +6,7 @@ export default {
       like: 'heart',
       dislike: 'heart-broken',
       visit: 'eye',
-      message: 'comment-alt',
+      messages: 'comment-alt',
       male: 'mars',
       female: 'venus',
       bisexual: 'transgender',

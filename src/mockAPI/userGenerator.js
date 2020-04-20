@@ -38,17 +38,17 @@ const randText = (min, max, arr) => {
 };
 
 // returns new array with length from 'min' to 'max' and unique values from 'minNum' to 'maxNum'
-const randArrNum = (min, max, minNum, maxNum) => {
-  const na = [];
-  const n = r(min, max);
-  for (let i = 0; i < n; i += 1) {
-    const val = r(minNum, maxNum);
-    if (!na.includes(val)) {
-      na.push(val);
-    }
-  }
-  return na;
-};
+// const randArrNum = (min, max, minNum, maxNum) => {
+//   const na = [];
+//   const n = r(min, max);
+//   for (let i = 0; i < n; i += 1) {
+//     const val = r(minNum, maxNum);
+//     if (!na.includes(val)) {
+//       na.push(val);
+//     }
+//   }
+//   return na;
+// };
 
 // distance in km between two points on map
 const distance = ([x, y], [ourX, ourY]) => {
@@ -57,10 +57,10 @@ const distance = ([x, y], [ourX, ourY]) => {
   return Math.floor(Math.sqrt(diffX * diffX + diffY * diffY) * 100 * 111.3) / 100;
 };
 
-let likeList = [];
-let visitorLikeList = [];
-let historyList = [];
-let visitorList = [];
+const likeList = [];
+const visitorLikeList = [];
+const historyList = [];
+const visitorList = [];
 const userList = [];
 const chatList = {};
 
@@ -72,22 +72,18 @@ export default {
     const myLocation = await GPS.byGPS()
       .then((loc) => [loc.x, loc.y])
       .catch(() => [55.7965312, 37.575065599999995]);
-    likeList = randArrNum(1, 5, 0, n);
-    visitorLikeList = randArrNum(1, 5, 0, n);
-    historyList = randArrNum(1, 5, 0, n);
-    visitorList = randArrNum(1, 5, 0, n);
     const tagList = {};
     let user = {};
 
     // generate 3 people who match each other with random messages
     for (let i = 0; i < 3; i += 1) {
-      const id = r(0, n);
+      const id = r(0, n - 1);
       likeList.push(id);
       visitorLikeList.push(id);
       const messages = [];
       for (let j = 0; j < 10; j += 1) {
         const message = {
-          text: randText(1, 10, newwords),
+          text: randText(1, 1, newwords),
           from: r(0, 1),
         };
         messages.push(message);
@@ -150,7 +146,6 @@ export default {
       userList.push(genereateUser(i));
     }
     return new Promise((resolve) => {
-      // setTimeout(() => {
       resolve({
         token: 'user',
         user,
@@ -162,54 +157,59 @@ export default {
         visitorList,
         chatList,
       });
-      // }, 1000);
     });
   },
 
   getNotifications: () => new Promise((resolve) => {
     setTimeout(() => {
       const result = [];
-      const like = [];
-      const dislike = [];
-      const visit = [];
-      const messages = [];
-      const actions = ['like', '', 'visit', 'message', '', '', '', '', '', ''];
+      const actions = ['like', 'dislike', 'visit', 'message'];
+      // const actions = ['like', 'dislike', 'visit', 'message', '', '', '', '', '', ''];
 
 
-      for (let i = 0; i < r(0, 10); i += 1) {
+      for (let i = 0; i < 2; i += 1) {
         const action = actions[r(0, actions.length - 1)];
         if (action === 'visit') {
-          visit.push(r(0, userList.length - 1));
+          const id = r(0, userList.length - 1);
+          result.push({
+            action: 'visit',
+            id,
+          });
         } else if (action === 'dislike') {
           const index = r(0, visitorLikeList.length);
           const idArr = visitorLikeList.splice(index, 1);
-          if (idArr[0]) dislike.push(idArr[0]);
+          if (idArr[0]) {
+            result.push({
+              action: 'dislike',
+              id: idArr[0],
+            });
+          }
           if (chatList[idArr[0]]) delete chatList[idArr[0]];
         } else if (action === 'like') {
-          const id = r(1, 1000);
-          if (!visitorLikeList.includes(id) && !dislike.includes(id)) {
+          const id = r(1, userList.length - 1);
+          if (!visitorLikeList.includes(id)) {
             visitorLikeList.push(id);
-            like.push(id);
+            result.push({
+              action: 'like',
+              id,
+            });
           }
         } else if (action === 'message') {
           const chatUsers = Object.keys(chatList);
           if (chatUsers.length) {
             const id = chatUsers[r(0, chatUsers.length - 1)];
-            messages.push({
+            result.push({
               id,
-              text: randText(10, 100, newwords),
+              action: 'messages',
+              text: randText(1, 2, newwords),
             });
           }
         }
       }
-      if (dislike.length) result.push({ status: 'dislike', who: dislike });
-      if (like.length) result.push({ status: 'like', who: like });
-      if (visit.length) result.push({ status: 'visit', who: visit });
-      if (messages.length) result.push({ status: 'message', who: messages });
       resolve(result);
     }, 1000);
   }),
-  login() { return this.getUsers(10); },
+  login() { return this.getUsers(100); },
   saveChanges: () => new Promise((resolve) => {
     resolve({
       status: 'ok',
@@ -230,5 +230,14 @@ export default {
       status: 'ok',
     });
   }),
-
+  sendMessage: () => new Promise((resolve) => {
+    resolve({
+      status: 'ok',
+    });
+  }),
+  visit: () => new Promise((resolve) => {
+    resolve({
+      status: 'ok',
+    });
+  }),
 };

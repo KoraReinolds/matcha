@@ -2,7 +2,7 @@
     <div
       v-if="messages"
       :class="[
-        'messages',
+        'notifications',
         'only_laptop',
       ]"
     >
@@ -18,12 +18,22 @@
             `${message.status}_bg`,
             `${message.status}_border`,
           ]"
+          :style="{
+            display: message.visible ? 'block' : 'none',
+          }"
         >
           <font-awesome-icon
             :class="[
+              'close',
+            ]"
+            @click="closeMessage(index)"
+            icon="times"
+          />
+          <font-awesome-icon
+            :class="[
               'icon',
-              `${icons[message.status]}_color`,
-              'active',
+              'fa-2x',
+              `${message.status}_color`,
               message.status
             ]"
             :icon="icons[message.status]"
@@ -35,7 +45,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import iconsMixin from '@/mixins/iconMixin';
 
 export default {
@@ -45,17 +55,19 @@ export default {
   computed: {
     ...mapGetters({
       messages: 'msg/GET',
-      // show: 'msg/MESSAGE_VISIBLE',
     }),
   },
   methods: {
+    ...mapMutations({
+      closeMessage: 'msg/CLOSE_MSG',
+    }),
     ...mapActions({
       getNotifications: 'msg/GET_NOTIFICATIONS',
     }),
   },
   mounted() {
-    // setTimeout(() => this.getNotifications(), 1000);
-    // setInterval(() => this.getNotifications(), 9000);
+    setTimeout(() => this.getNotifications(), 1000);
+    setInterval(() => this.getNotifications(), 99000);
   },
 };
 </script>
@@ -63,30 +75,33 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/style.scss';
 @media (min-width: $mobile-breakpoint) {
-  .messages {
+  .notifications {
     position: fixed;
-    height: 0;
-    width: 350px;
     right: 5%;
     bottom: 10%;
-    z-index: 10;
     display: flex;
     flex-direction: column-reverse;
+    z-index: 10;
     .mess {
-      margin: 10px 0;
       position: relative;
-      bottom: 0;
+      color: white;
+      background: linear-gradient(
+        rgba(0, 0, 0, 0.7),
+        rgba(0, 0, 0, 0.7)
+      );
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
       border-radius: 20px 20px 0px 20px;
-      height: 60px;
-      // line-height: 60px;
-      padding: 20px 20px 20px 70px;
-      .icon {
+      padding: 20px 40px 20px 20px;
+      .close {
+        cursor: pointer;
         position: absolute;
-        top: 15px;
-        left: 20px;
-        height: 30px;
-        padding: 0;
-        font-size: 30px;
+        right: 10px;
+        top: 10px;
+      }
+      .icon {
+        margin-right: 10px;
       }
     }
   }

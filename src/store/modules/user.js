@@ -44,6 +44,7 @@ export default {
         commit('tools/SET_SEARCH_PARAMS', data.user, { root: true });
         commit('tools/SET_USERS', data, { root: true });
         commit('tools/FILTER_USERS', null, { root: true });
+        commit('chat/SET_CHAT', data, { root: true });
       });
     },
   },

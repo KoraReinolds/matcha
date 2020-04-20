@@ -42,6 +42,7 @@ $red-dark-3: #c62828;
 $red-dark-4: #B71C1C;
 
 $main-color: $green-light-1;
+$main-color-light: $green-light-4;
 $main-color-hover: $green-dark-2;
 $main-color-shadow: $green-dark-2;
 
@@ -53,19 +54,50 @@ $error-color: $red-dark-1;
 $like-color: $red-dark-1;
 $ban-color: $red-dark-4;
 $block-color: $font-color;
+
+$ban-color-message: $red-light-1;
+$block-color-message: lightgray;
+$like-color-message: $red-light-3;
+$dislike-color-message: $purple-light-3;
+$message-color-message: $blue-light-3;
+$visit-color-message: $green-light-3;
+
 .male_color { color: $male-color; }
 .female_color { color: $female-color; }
 .bisexual_color { color: $bisexual-color; }
-.ban_color { color: $ban-color; }
-.ban_bg { background: rgba($color: $ban-color, $alpha: 0.1); }
-.ban_border { border: 1px solid $ban-color; }
-.block_color { color: $block-color; }
-.block_bg { background: rgba($color: $block-color, $alpha: 0.1); }
-.block_border { border: 1px solid $block-color; }
 
-$wrapper-width: 1000px;
+.ban_color { color: $ban-color-message; }
+.ban_bg { background: rgba($color: $ban-color-message, $alpha: 0.1); }
+.ban_border { border: 3px solid $ban-color-message; }
+
+.block_color { color: $block-color-message; }
+.block_bg { background: rgba($color: $block-color-message, $alpha: 0.1); }
+.block_border { border: 3px solid $block-color-message; }
+
+.like_color { color: $like-color-message; }
+.like_bg { background: rgba($color: $like-color-message, $alpha: 0.1); }
+.like_border { border: 3px solid $like-color-message; }
+
+.dislike_color { color: $dislike-color-message; }
+.dislike_bg { background: rgba($color: $dislike-color-message, $alpha: 0.1); }
+.dislike_border { border: 3px solid $dislike-color-message; }
+
+.messages_color { color: $message-color-message; }
+.messages_bg { background: rgba($color: $message-color-message, $alpha: 0.1); }
+.messages_border { border: 3px solid $message-color-message; }
+
+.visit_color { color: $visit-color-message; }
+.visit_bg { background: rgba($color: $visit-color-message, $alpha: 0.1); }
+.visit_border { border: 3px solid $visit-color-message; }
+
+$wrapper-width: 1200px;
 $mobile-breakpoint: 480px;
 $padding_content: 10px;
+
+$header-height: 80px;
+$header-height-mobile: 30px;
+$footer-height: 80px;
+$footer-height-mobile: 30px;
 
 @media (max-width: $mobile-breakpoint) {
   .only_laptop {
@@ -94,6 +126,7 @@ $padding_content: 10px;
   background: $main-color;
   color: white;
   border-radius: 5px;
+  text-align: center;
   &:hover {
     background: $main-color-hover;
   }
@@ -151,3 +184,228 @@ $padding_content: 10px;
     }
   }
 }
+
+@mixin uesr-animation() {
+  .user-enter-active {
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+    .gender {
+      animation: 0.5s show 0.5s ease-in forwards;
+    }
+    .pref_0 {
+      animation: 0.5s show0 0.5s ease-in forwards;
+    }
+    .pref_1 {
+      animation: 0.5s show1 0.5s ease-in forwards;
+    }
+    .pref_2 {
+      animation: 0.5s show2 0.5s ease-in forwards;
+    }
+    .image {
+      transition: all 0.000.5s;
+      transition-delay: 0.5s;
+      opacity: 1;
+    }
+    .image .custom_image {
+      transition: all 0.5s;
+      transition-delay: 0.5s;
+    }
+    .fio {
+      transition: all 0.5s;
+      transition-delay: 0.5s;
+    }
+    .biography {
+      transition: all 0.5s;
+      transition-delay: 0.5s;
+    }
+    .tags {
+      transition: all 0.5s;
+      transition-delay: 0.5s;
+    }
+  }
+
+  .user-leave-active {
+    transition: all 0.5s;
+    .gender {
+      animation: 0.5s hide ease-out forwards;
+    }
+    .pref_0 {
+      animation: 0.5s hide0 ease-out forwards;
+    }
+    .pref_1 {
+      animation: 0.5s hide1 ease-out forwards;
+    }
+    .pref_2 {
+      animation: 0.5s hide2 ease-out forwards;
+    }
+    .image {
+      transition: all 0.5s;
+      opacity: 1;
+    }
+    .image .custom_image {
+      transition: all 0.5s;
+    }
+    .fio {
+      transition: all 0.5s;
+    }
+    .biography {
+      transition: all 0.5s;
+    }
+    .tags {
+      transition: all 0.5s;
+    }
+  }
+
+  .user-leave-to {
+    .fio {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+    .image .custom_image {
+      transform: rotate(-360deg);
+      opacity: 0.5;
+    }
+    .tags {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+  }
+  .user-enter {
+    .fio {
+      transform: translateX(100px);
+      opacity: 0;
+    }
+    .image {
+      opacity: 0;
+    }
+    .image .custom_image {
+      transform: rotate(360deg);
+      opacity: 0.5 ease-out;
+    }
+    .tags {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+  }
+  .user-enter, .user-leave-to {
+    .biography {
+      opacity: 0;
+    }
+  }
+
+  .user-move {
+    transition: transform 0.5s;
+  }
+
+
+  @keyframes show {
+    0% {
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+        scale(0.5);
+    }
+    100% {
+      transform:
+        rotate(-150deg)
+        translateX(120px)
+        rotate(150deg)
+        translate(-50%, -50%);
+    }
+  }
+  @keyframes show0 {
+    0% {
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+    }
+    100% {
+      transform:
+        rotate(-115deg)
+        translateX(120px)
+        rotate(115deg)
+        translate(-50%, -50%);
+    }
+  }
+  @keyframes show1 {
+    0% {
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+    }
+    100% {
+      transform:
+        rotate(-95deg)
+        translateX(120px)
+        rotate(95deg)
+        translate(-50%, -50%);
+    }
+  }
+  @keyframes show2 {
+    0% {
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+    }
+    100% {
+      transform:
+        rotate(-75deg)
+        translateX(120px)
+        rotate(75deg)
+        translate(-50%, -50%);
+    }
+  }
+
+
+  @keyframes hide {
+    to {
+      z-index: 100;
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+        scale(0.5);
+    }
+  }
+  @keyframes hide0 {
+    to {
+      z-index: 100;
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+    }
+  }
+  @keyframes hide1 {
+    to {
+      z-index: 100;
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+    }
+  }
+  @keyframes hide2 {
+    to {
+      z-index: 100;
+      transform:
+        rotate(90deg)
+        translateX(120px)
+        rotate(-90deg)
+        translate(-50%, -50%)
+    }
+  }
+
+}
+

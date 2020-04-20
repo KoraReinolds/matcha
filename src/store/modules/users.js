@@ -11,88 +11,43 @@ export default {
     myLikeList: null,
     visitorList: null,
     historyList: null,
-    // chatList: null,
-    // curChatUserId: null,
   },
   getters: {
-    // CHAT_MESSAGES: (state) => (state.curChatUserId
-    //   ? state.chatList[state.curChatUserId].messages : ''),
-    // CUR_CHAT_USER: (state) => state.curChatUserId,
     CURRENT_USER: (state) => (state.users ? state.users[state.curUserId] : ''),
-    // CHAT_LIST: (state) => state.chatList,
     VISITOR_LIKES: (state) => state.visitorLikeList,
     MY_LIKES: (state) => state.myLikeList,
     VISITORS: (state) => state.visitorList,
     HISTORY: (state) => state.historyList,
-    // USERS: (state) => state.users,
+    USERS: (state) => state.users,
   },
   mutations: {
-    // SEND_ME_MESSAGE: (state, idArr) => {
-    //   idArr.forEach((message) => {
-    //     state.chatList[message.id].messages.push({
-    //       text: message.text,
-    //       from: false,
-    //     });
-    //   });
-    // },
-    // SET_CHANGE_MARK: (state, users) => {
-    //   users.forEach((userId) => { state.users[userId].changes = true; });
-    // },
-    SET_CUR_CHAT_USER_ID: (state, id) => {
-      state.curChatUserId = id;
+    VISIT_USER: (state, id) => {
+      if (id && !state.historyList.includes(id)) {
+        state.historyList.unshift(id);
+      }
     },
-    // SET_MESSAGE: (state, message) => {
-    //   state.chatList[state.curChatUserId].messages.push({
-    //     text: message, from: 1,
-    //   });
-    // },
     SET_CUR_USER_ID: (state, id) => { state.curUserId = id; },
-    // VISIT_ME: (state, idArr) => {
-    //   idArr.forEach((id) => {
-    //     lib.unshiftIfNotExist(state.visitorList, id);
-    //     state.visitorList = [...state.visitorList];
-    //   });
-    // },
-    // DISLIKE_ME: (state, idArr) => {
-    //   idArr.forEach((id) => {
-    //     lib.unshiftIfNotExist(state.visitorList, id);
-    //     state.visitorList = [...state.visitorList];
+    VISIT_ME: (state, id) => {
+      lib.unshiftIfNotExist(state.visitorList, id);
+      state.visitorList = [...state.visitorList];
+    },
+    DISLIKE_ME: (state, id) => {
+      lib.unshiftIfNotExist(state.visitorList, id);
+      state.visitorList = [...state.visitorList];
 
-    //     lib.unshiftOrDelete(state.visitorLikeList, id);
-    //     state.visitorLikeList = [...state.visitorLikeList];
+      lib.unshiftOrDelete(state.visitorLikeList, id);
+      state.visitorLikeList = [...state.visitorLikeList];
+    },
+    LIKE_ME: (state, id) => {
+      state.visitorList = [...state.visitorList];
+      lib.unshiftIfNotExist(state.visitorList, id);
 
-    //     if (state.myLikeList.includes(id)) {
-    //       delete state.chatList[id];
-    //       state.chatList = { ...state.chatList };
-    //     }
-    //   });
-    // },
-    // LIKE_ME: (state, idArr) => {
-    //   idArr.forEach((id) => {
-    //     state.visitorList = [...state.visitorList];
-    //     lib.unshiftIfNotExist(state.visitorList, id);
-
-    //     lib.unshiftOrDelete(state.visitorLikeList, id);
-    //     state.visitorLikeList = [...state.visitorLikeList];
-
-    //     if (state.myLikeList.includes(id)) {
-    //       state.chatList[id] = {
-    //         messages: {},
-    //       };
-    //       state.chatList = { ...state.chatList };
-    //     }
-    //   });
-    // },
+      lib.unshiftOrDelete(state.visitorLikeList, id);
+      state.visitorLikeList = [...state.visitorLikeList];
+    },
     LIKE: (state, user) => {
       lib.unshiftOrDelete(state.myLikeList, user.id);
       state.myLikeList = [...state.myLikeList];
-
-      if (state.visitorLikeList.includes(user.id)) {
-        state.chatList[user.id] = {
-          messages: {},
-        };
-        state.chatList = { ...state.chatList };
-      }
     },
     SET_USERS: (state, {
       userList,
@@ -117,6 +72,11 @@ export default {
     },
   },
   actions: {
+    VISIT_USER: ({ commit }, id) => {
+      API.visit(id).then(() => {
+        commit('VISIT_USER', id);
+      });
+    },
     BAN: ({ commit }, user) => {
       API.ban(user.id).then(() => {
         commit('msg/SET_MESSAGE', {
@@ -133,15 +93,16 @@ export default {
         }, { root: true });
       });
     },
-    LIKE: ({ commit }, user) => {
+    LIKE: ({ commit, getters }, user) => {
       API.like(user.id).then(() => {
         commit('LIKE', user);
+        if (getters.MY_LIKES.includes(user.id)
+          && getters.VISITOR_LIKES.includes(user.id)) {
+          commit('chat/ADD_TO_CHAT', user.id, { root: true });
+        } else {
+          commit('chat/REMOVE_FROM_CHAT', user.id, { root: true });
+        }
       });
     },
-  //   SEND_MESSAGE: ({ commit }, value) => {
-  //     // API.getUsers(1000).then((users) => {
-  //     commit('SET_MESSAGE', value);
-  //     // });
-  //   },
   },
 };

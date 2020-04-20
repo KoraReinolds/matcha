@@ -45,7 +45,6 @@
       >
       <font-awesome-layers
         class="icon"
-        v-if="notifications.length"
       >
         <font-awesome-icon icon="bell"/>
         <span
@@ -155,8 +154,8 @@ header {
       }
     }
     .counter {
-      right: 10px;
-      top: -10px;
+      right: 15px;
+      top: 0px;
     }
   }
   &.fill {

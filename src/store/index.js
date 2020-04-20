@@ -4,6 +4,7 @@ import authModule from './modules/auth';
 import userModule from './modules/user';
 import usersModule from './modules/users';
 import messagesModule from './modules/messages';
+import chatModule from './modules/chat';
 import toolsModule from './modules/tools';
 
 
@@ -29,5 +30,6 @@ export default new Vuex.Store({
     users: usersModule,
     msg: messagesModule,
     tools: toolsModule,
+    chat: chatModule,
   },
 });

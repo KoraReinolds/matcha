@@ -8,8 +8,11 @@
         active,
       }
     ]"
+    :style="{
+      cursor: disabled === '' ? 'default' : 'pointer',
+    }"
     icon="heart"
-    @click="like(user)"
+    @click="disabled !== '' && like(user)"
   />
 </template>
 
@@ -20,7 +23,7 @@ export default {
   name: 'Like',
   data: () => ({
   }),
-  props: ['size', 'user', 'active'],
+  props: ['size', 'user', 'active', 'disabled'],
   computed: {
     ...mapGetters({
       myLikeList: 'users/MY_LIKES',

@@ -30,7 +30,7 @@
         v-if="textarea"
         ref="textarea"
         type="text"
-        @focus="focus = true"
+        @focus="focus = true; $emit('focus', $event)"
         @blur="focus = false; $emit('blur', $event)"
         @input="$emit('input', $event.target.value);"
         :value="value"

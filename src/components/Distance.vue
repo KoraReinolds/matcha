@@ -25,5 +25,6 @@ export default {
 @import '@/assets/style.scss';
 
 .distance {
+
 }
 </style>

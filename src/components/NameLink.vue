@@ -5,7 +5,7 @@
     <router-link
       :to="{ path: `/user/${user.id}` }"
     >
-      {{`${user.firstName} ${user.lastName}, ${user.age}`}}
+      {{`${user.firstName} ${user.lastName} `}}
     </router-link>
   </span>
 </template>

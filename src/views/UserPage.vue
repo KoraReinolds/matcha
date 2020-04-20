@@ -203,6 +203,7 @@ export default {
       setCurUserId: 'users/SET_CUR_USER_ID',
     }),
     ...mapActions({
+      visitUser: 'users/VISIT_USER',
     }),
   },
   watch: {
@@ -211,7 +212,8 @@ export default {
     },
   },
   mounted() {
-    this.setCurUserId(this.$route.params.id);
+    this.setCurUserId(+this.$route.params.id);
+    this.visitUser(+this.$route.params.id);
   },
 };
 </script>
@@ -221,7 +223,7 @@ export default {
 
 #user-page {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   padding: 50px 10px;
   @media (max-width: $mobile-breakpoint) { padding: 0 0 50px 0; }
@@ -241,12 +243,14 @@ export default {
     }
   }
   .info {
+    @media (min-width: $mobile-breakpoint) { width: 600px; };
+    @media (max-width: $mobile-breakpoint) { width: 100%; };
     margin: 0 30px;
     @media (max-width: $mobile-breakpoint) { margin: 0; }
     .field {
       position: relative;
-      max-width: 600px;
-      margin: 10px 5%;
+      width: 100%;
+      padding: 10px 5%;
       .fio {
         display: flex;
         flex-wrap: wrap;

@@ -2,69 +2,43 @@
   <div
     class="short-list"
   >
-    <transition-group
+    <!-- <transition-group
       name="list"
       tag="p"
-    >
+    > -->
     <template
       v-if="myLikeList && historyList && this.$route.name==='history'"
     >
       <UserShort
-        v-for="userId in historyList"
-        :key="'history'+userId"
+        v-for="(userId, index) in historyList"
+        :key="'history'+index+userId"
         :user="users[userId]"
-      >
-      </UserShort>
+      />
     </template>
 
     <template
       v-else-if="visitorLikeList && visitorList && this.$route.name==='visitors'"
     >
       <UserShort
-        v-for="userId in visitorList"
-        :key="'visitors'+userId"
+        v-for="(userId, index) in visitorList"
+        :key="'visitors'+index+userId"
         :user="users[userId]"
-      >
-      </UserShort>
+      />
     </template>
 
     <template
       v-else-if="notifications && this.$route.name==='notifications'"
     >
       <UserShort
-        v-for="notification in notifications"
-        :key="'notifications'+notification.id"
+        v-for="(notification, index) in notifications"
+        :key="'notifications'+index+notification.id"
         :user="users[notification.id]"
+        :notification="notification"
       >
       </UserShort>
     </template>
-    </transition-group>
+    <!-- </transition-group> -->
   </div>
-
-  <!-- <div
-    class="short-list"
-    v-else-if="notifications && this.$route.name==='notifications'"
-  >
-    <transition-group
-      name="list"
-      tag="p"
-    >
-      <UserShort
-        v-for="notification in notifications"
-        :key="'notif'+notification.id"
-        :user="users[notification.id]"
-      >
-        <div
-          class="icons"
-        >
-          <font-awesome-icon v-for="act in notification.actions"
-            :size="`${mobile ? 2 : 3}x`"
-            :key="'action'+act+notification.id"
-            :class="['icon', 'active', act, `${icons[act]}_color`]" :icon="icons[act]" />
-        </div>
-      </UserShort>
-    </transition-group>
-  </div> -->
 
 </template>
 

@@ -10,12 +10,12 @@ export default {
     tools: {
       gender: '',
       pref: [],
-      minRate: 0,
+      minRate: '0',
       maxRate: 1000,
-      minDist: 0,
-      maxDist: 10,
-      minAge: 55,
-      maxAge: 99,
+      minDist: '0',
+      maxDist: 100,
+      minAge: null,
+      maxAge: null,
       tags: [],
     },
     countPerPage: window.innerWidth <= 480 ? 1 : 3,
@@ -36,7 +36,7 @@ export default {
         : null),
   },
   mutations: {
-    CHANGE_COUNT_PER_PAGE: (state, val) => { state.countPerPage = val; },
+    CHANGE_COUNT_PER_PAGE: (state) => { state.countPerPage = window.innerWidth <= 480 ? 1 : 3; },
     SORT: (state, value) => {
       if (value) {
         const prefixes = {};
@@ -150,6 +150,7 @@ export default {
       }
     },
     SET_FILTER: ({ commit }, data) => {
+      console.log(data);
       commit('SET_FILTER', data);
       commit('FILTER_USERS');
     },

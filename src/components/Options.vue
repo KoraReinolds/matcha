@@ -20,6 +20,7 @@
         'options',
         {
           many: type === 'checkbox',
+          icons: icons,
         }
       ]">
       <div
@@ -35,9 +36,27 @@
           :checked="opt === value || value.includes(opt)"
         >
         <label
+          :class="{
+            label: !icons,
+          }"
           :for="label+opt"
         >
-        {{ opt }}
+        <font-awesome-icon
+          v-if="icons"
+          :class="[
+            'icon',
+            'fa-2x',
+            {
+              active: value.includes(opt)
+            }
+          ]"
+          :icon="icons[opt]"
+        />
+        <template
+          v-else
+        >
+          {{ opt }}
+        </template>
         </label>
       </div>
       <div
@@ -55,7 +74,7 @@ import validateMixin from '@/mixins/validateMixin';
 
 export default {
   name: 'Options',
-  props: ['label', 'value', 'options', 'many', 'rules'],
+  props: ['label', 'value', 'options', 'many', 'rules', 'icons'],
   data: () => ({
     type: null,
     errorMsg: null,
@@ -74,6 +93,7 @@ export default {
   },
   watch: {
     value() {
+      this.$emit('input', this.value);
       this.validate(this.value);
     },
   },
@@ -94,14 +114,14 @@ export default {
       opacity: 0;
       width: 0;
       height: 0;
-      &:checked + label:after {
+      &:checked + .label:after {
         top: 10px;
         left: -25px;
         width: 10px;
         height: 10px;
       }
     }
-    label {
+    .label {
       cursor: pointer;
       display: inline-block;
       height: 30px;
@@ -134,13 +154,13 @@ export default {
       }
     }
     &.many {
-      input:checked + label:after {
+      input:checked + .label:after {
         top: 10px;
         left: -25px;
         width: 10px;
         height: 10px;
       }
-      label {
+      .label {
         &:before {
           cursor: pointer;
           content: '';
@@ -166,9 +186,20 @@ export default {
         }
       }
     }
+    &.icons {
+      display: flex;
+      padding: 10px 0;
+      .icon {
+        color: #fff;
+        cursor: pointer;
+        &.active {
+          color: $main-color;
+        }
+      }
+    }
   }
   &.error {
-    label:before {
+    .label:before {
       background: rgba($color: $error-color, $alpha: 0.75) !important;
     }
   }

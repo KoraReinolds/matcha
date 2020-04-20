@@ -75,7 +75,6 @@
           'form-field',
         ]"
         label="New tag"
-        v-model.trim="tags"
         outlined
         v-model="tags"
         :rules="rules.tags"

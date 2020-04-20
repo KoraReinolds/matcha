@@ -12,12 +12,25 @@
 </template>
 
 <script>
+import { mapMutations, mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'ChatLink',
   data: () => ({
     closeButton: null,
   }),
   props: ['user'],
+  computed: {
+    ...mapGetters({
+    }),
+  },
+  methods: {
+    ...mapMutations({
+      chatWIthUser: 'chat/SET_CUR_CHAT_USER_ID',
+    }),
+    ...mapActions({
+    }),
+  },
   mounted() {
   },
 };

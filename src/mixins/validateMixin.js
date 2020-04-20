@@ -1,7 +1,6 @@
 export default {
   methods: {
     validate(value) {
-      // this.$emit('input', value);
       if (this.rules && this.rules.rules) {
         let msg = null;
         this.rules.rules.every((rule) => {

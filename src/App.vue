@@ -3,18 +3,21 @@
     <PopWindow/>
     <Header/>
     <router-view/>
+    <Footer/>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
 import PopWindow from '@/components/PopWindow.vue';
 
 export default {
   name: 'app',
   components: {
     Header,
+    Footer,
     PopWindow,
   },
   computed: {
@@ -51,7 +54,7 @@ html {
   box-sizing: inherit;
 }
 .wrapper {
-  max-width: 1000px;
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
 }
@@ -65,12 +68,14 @@ html,
     text-align: left;
   }
   min-height: 100vh;
+  height: 100%;
   margin: 0;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position: relative;
   fieldset {
     padding: 0;
     margin: 0;
@@ -85,7 +90,9 @@ html,
 #app {
   @media (max-width: $mobile-breakpoint) {
     padding-top: 30px;
+    padding-bottom: 30px;
   }
   padding-top: 80px;
+  padding-bottom: 80px;
 }
 </style>

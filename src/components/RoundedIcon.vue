@@ -27,7 +27,7 @@
     v-else
     :icon="icons[icon] ? icons[icon] : icon"
     :class="[
-      `${icon}_color`
+      `${icon}_color`,
     ]"
     @click="$emit('click', $event)"
     transform="shrink-5"
