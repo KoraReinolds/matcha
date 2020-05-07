@@ -49,7 +49,10 @@
         <font-awesome-icon icon="bell"/>
         <span
           v-if="curLen(notifications, 'notifications')"
-          class="fa-layers-counter counter fa-2x"
+          :class="[
+            'fa-layers-counter',
+            `counter fa-${ mobile ? 2 : 3 }x`,
+          ]"
         >
           {{ curLen(notifications, 'notifications') }}
         </span>
@@ -91,6 +94,7 @@ export default {
     ...mapGetters({
       user: 'user/USER',
       notifications: 'msg/GET_ALL_NOTIFICATIONS',
+      mobile: 'IS_MOBILE',
     }),
   },
   methods: {

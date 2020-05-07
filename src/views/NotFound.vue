@@ -1,6 +1,8 @@
 <template>
   <div id="not_found">
-    <h1>not_found page</h1>
+    <h3>
+      Page not found
+    </h3>
   </div>
 </template>
 
@@ -28,5 +30,12 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/style.scss';
+
+#not_found {
+  h3 {
+    margin-top: 10%;
+    text-align: center;
+  }
+}
 
 </style>
