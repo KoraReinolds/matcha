@@ -167,7 +167,7 @@ export default {
   methods: {
     ...mapActions({
       signIn: 'auth/SIGN_IN',
-      signUp: 'auth/SIGN_IN',
+      signUp: 'auth/REGISTER',
     }),
   },
 };

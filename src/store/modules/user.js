@@ -29,8 +29,8 @@ export default {
     },
   },
   actions: {
-    SAVE_CHANGES() {
-      API.saveChanges().then((data) => {
+    SAVE_CHANGES(changes) {
+      API.profileUpdate(changes).then((data) => {
         if (data.status === 'ok') {
           console.log('ok');
         }

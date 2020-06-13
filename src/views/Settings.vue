@@ -106,7 +106,7 @@
               disabled: !rules.valid,
             }
           ]"
-          @click.prevent="saveChanges"
+          @click.prevent="saveChanges(user)"
         >
           Save changes
         </span>

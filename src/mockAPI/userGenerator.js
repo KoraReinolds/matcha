@@ -167,7 +167,7 @@ export default {
       // const actions = ['like', 'dislike', 'visit', 'message', '', '', '', '', '', ''];
 
 
-      for (let i = 0; i < 2; i += 1) {
+      for (let i = 0; i < 10; i += 1) {
         const action = actions[r(0, actions.length - 1)];
         if (action === 'visit') {
           const id = r(0, userList.length - 1);
@@ -206,10 +206,11 @@ export default {
           }
         }
       }
+      console.log(JSON.stringify(result));
       resolve(result);
     }, 1000);
   }),
-  login() { return this.getUsers(100); },
+  login() { return this.getUsers(10); },
   saveChanges: () => new Promise((resolve) => {
     resolve({
       status: 'ok',
