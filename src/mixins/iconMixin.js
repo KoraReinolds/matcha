@@ -10,6 +10,7 @@ export default {
       male: 'mars',
       female: 'venus',
       bisexual: 'transgender',
+      error: 'ban',
     },
   }),
 };

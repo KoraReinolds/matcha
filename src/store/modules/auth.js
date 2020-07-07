@@ -33,17 +33,24 @@ export default {
     },
     SIGN_IN({ commit }, info) {
       API.login(info).then((data) => {
-        localStorage.setItem('user', data.token);
-        commit('user/SET_USER', data.user, { root: true });
-        commit('users/SET_USERS', data, { root: true });
-        commit('tools/SET_SEARCH_PARAMS', data.user, { root: true });
-        commit('tools/SET_USERS', data, { root: true });
-        commit('tools/FILTER_USERS', null, { root: true });
-        commit('chat/SET_CHAT', data, { root: true });
-        if (data.user.informationFilled) {
-          router.push({ path: `/user/${data.user.id}` });
-        } else {
-          router.push({ name: 'settings' });
+        if (data.type === 'ok') {
+          localStorage.setItem('user', data.token);
+          commit('user/SET_USER', data.user, { root: true });
+          commit('users/SET_USERS', data, { root: true });
+          commit('tools/SET_SEARCH_PARAMS', data.user, { root: true });
+          commit('tools/SET_USERS', data, { root: true });
+          commit('tools/FILTER_USERS', null, { root: true });
+          commit('chat/SET_CHAT', data, { root: true });
+          if (data.user.informationFilled) {
+            router.push({ path: `/user/${data.user.id}` });
+          } else {
+            router.push({ name: 'settings' });
+          }
+        } else if (data.type === 'error') {
+          commit('msg/SET_MESSAGE', {
+            status: 'error',
+            text: 'Login or password is wrong',
+          }, { root: true });
         }
       });
     },

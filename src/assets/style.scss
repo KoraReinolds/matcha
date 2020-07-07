@@ -53,9 +53,11 @@ $font-color: #2c3e50;
 $error-color: $red-dark-1;
 $like-color: $red-dark-1;
 $ban-color: $red-dark-4;
+$error-color: $red-dark-4;
 $block-color: $font-color;
 
 $ban-color-message: $red-light-1;
+$error-color-message: $red-light-1;
 $block-color-message: lightgray;
 $like-color-message: $red-light-3;
 $dislike-color-message: $purple-light-3;
@@ -65,6 +67,10 @@ $visit-color-message: $green-light-3;
 .male_color { color: $male-color; }
 .female_color { color: $female-color; }
 .bisexual_color { color: $bisexual-color; }
+
+.error_color { color: $error-color-message; }
+.error_bg { background: rgba($color: $error-color-message, $alpha: 0.1); }
+.error_border { border: 3px solid $error-color-message; }
 
 .ban_color { color: $ban-color-message; }
 .ban_bg { background: rgba($color: $ban-color-message, $alpha: 0.1); }

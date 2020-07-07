@@ -16,6 +16,7 @@ export default {
       state.messages.splice(index, 1);
     },
     SET_MESSAGE: (state, message) => {
+      console.log('set message');
       const newMsg = {
         ...message,
         visible: true,
