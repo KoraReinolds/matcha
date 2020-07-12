@@ -110,6 +110,7 @@
             fnameReg,
             lnameReg,
             mailReg,
+            location,
            })"
         >
           SignUp
@@ -123,6 +124,7 @@
 import { mapActions } from 'vuex';
 import TextField from '@/components/TextField.vue';
 import Form from '@/components/Form.vue';
+import GPS from '../library/geolocation';
 
 export default {
   name: 'login',
@@ -132,6 +134,7 @@ export default {
   },
   data: () => ({
     status: 'login',
+    location: '',
     userLogin: '',
     passLogin: '',
     userReg: '',
@@ -169,6 +172,13 @@ export default {
       signIn: 'auth/SIGN_IN',
       signUp: 'auth/REGISTER',
     }),
+  },
+  mounted() {
+    GPS.byGPS()
+      .then((loc) => { this.location = loc; })
+      .catch(() => GPS.byIP()
+        .then((loc) => { this.location = loc; })
+        .catch(() => ({ x: 55.7965312, y: 37.575065599999995 })));
   },
 };
 </script>

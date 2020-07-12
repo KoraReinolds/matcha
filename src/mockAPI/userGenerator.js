@@ -68,10 +68,8 @@ const chatList = {};
 export default {
 
 
-  async getUsers(n) {
-    const myLocation = await GPS.byGPS()
-      .then((loc) => [loc.x, loc.y])
-      .catch(() => [55.7965312, 37.575065599999995]);
+  getUsers(n) {
+    const myLocation = [55.7965312, 37.575065599999995];
     const tagList = {};
     let user = {};
 
@@ -145,19 +143,17 @@ export default {
     for (let i = 1; i < n; i += 1) {
       userList.push(genereateUser(i));
     }
-    return new Promise((resolve) => {
-      resolve({
-        token: 'user',
-        user,
-        userList,
-        tagList,
-        likeList,
-        visitorLikeList,
-        historyList,
-        visitorList,
-        chatList,
-      });
-    });
+    return {
+      token: 'user',
+      user,
+      userList,
+      tagList,
+      likeList,
+      visitorLikeList,
+      historyList,
+      visitorList,
+      chatList,
+    };
   },
 
   getNotifications: () => new Promise((resolve) => {
@@ -207,10 +203,21 @@ export default {
         }
       }
       console.log(JSON.stringify(result));
-      resolve(result);
+      resolve({
+        type: 'ok',
+        data: result,
+      });
     }, 1000);
   }),
-  login() { return this.getUsers(10); },
+  login() {
+    console.log(this.getUsers(10));
+    return new Promise((resolve) => {
+      resolve({
+        type: 'ok',
+        data: this.getUsers(10),
+      });
+    });
+  },
   saveChanges: () => new Promise((resolve) => {
     resolve({
       status: 'ok',

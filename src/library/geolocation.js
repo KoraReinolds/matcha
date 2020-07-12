@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default {
   byGPS() {
     return new Promise((resolve, reject) => {
@@ -12,6 +14,15 @@ export default {
         );
       }
       return reject(new Error('No support for geolocation'));
+    });
+  },
+  byIP() {
+    return new Promise((resolve, reject) => {
+      axios.get('http://ip-api.com/json')
+        .then(({ data }) => {
+          resolve({ y: data.lon, x: data.lat });
+        })
+        .catch(() => reject(new Error('No support for geolocation')));
     });
   },
 };

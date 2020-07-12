@@ -103,7 +103,7 @@
           :class="[
             'btn',
             {
-              disabled: !rules.valid,
+              disabled: rules.valid,
             }
           ]"
           @click.prevent="saveChanges(user)"

@@ -77,6 +77,7 @@
 <script>
 import validateMixin from '@/mixins/validateMixin';
 import CustomImage from '@/components/CustomImage.vue';
+import axios from 'axios';
 
 export default {
   name: 'imagesFielld',
@@ -106,16 +107,21 @@ export default {
         main: len === 0,
       };
       if (files[0].type === 'image/jpeg' && len < 5) {
-        this.value.push(img);
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onload = () => {
-          img.src = reader.result;
-          this.$store.commit('SET_IMAGE_CHANGE', img);
-          this.$store.commit('SET_VALUE', {
-            key: this.field,
-            val: this.value,
-          });
+          this.value.push(img);
+          const fd = new FormData();
+          fd.append('image', reader.result.split(',')[1]);
+          axios.post('https://api.imgbb.com/1/upload?expiration=3600&key=52cdc2758163512d48d7ac9715a14c64', fd)
+            .then((resp) => {
+              img.src = resp.data.data.display_url;
+              this.$store.commit('SET_VALUE', {
+                key: this.field,
+                val: this.value,
+              });
+            })
+            .catch((e) => console.log(e));
           if (!len) {
             this.$store.commit('SET_CHANGE', {
               key: 'changeImageMain',
